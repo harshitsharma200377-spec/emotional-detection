@@ -15,19 +15,19 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CASCADE_DIR = os.path.join(BASE_DIR, "haarcascades")
 
 face_cacade = cv2.CascadeClassifier(
-    os.path.join(CASCADE_DIR, "haarcascade_frontalface_default.xml")
+    os.path.join(CASCADE_DIR, "haarcascades/haarcascade_frontalface_default.xml")
 )
 
 eyes_cascade = cv2.CascadeClassifier(
-    os.path.join(CASCADE_DIR, "haarcascade_eye.xml")
+    os.path.join(CASCADE_DIR, "haarcascades/haarcascade_eye.xml")
 )
 
 smile_cascade = cv2.CascadeClassifier(
-    os.path.join(CASCADE_DIR, "haarcascade_smile.xml")
+    os.path.join(CASCADE_DIR, "haarcascades/haarcascade_smile.xml")
 )
 
 eye_glasses_cascade = cv2.CascadeClassifier(
-    os.path.join(CASCADE_DIR, "haarcascade_eye_tree_eyeglasses.xml")
+    os.path.join(CASCADE_DIR, "haarcascades/haarcascade_eye_tree_eyeglasses.xml")
 )
 
 # ------------------ Check XML Files ------------------
