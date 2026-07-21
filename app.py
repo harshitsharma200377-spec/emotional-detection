@@ -4,7 +4,12 @@ import av
 import cv2
 import os
 
-st.set_page_config(page_title="Smart Face Detection", page_icon="😊")
+# ------------------ Streamlit Page ------------------
+
+st.set_page_config(
+    page_title="Smart Face Detection",
+    page_icon="😊"
+)
 
 st.title("😊 Smart Face Detection")
 st.write("Real-time Face, Eye and Smile Detection using OpenCV Haar Cascades")
@@ -15,19 +20,19 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CASCADE_DIR = os.path.join(BASE_DIR, "haarcascades")
 
 face_cacade = cv2.CascadeClassifier(
-    os.path.join(CASCADE_DIR, "haarcascades/haarcascade_frontalface_default.xml")
+    os.path.join(CASCADE_DIR, "haarcascade_frontalface_default.xml")
 )
 
 eyes_cascade = cv2.CascadeClassifier(
-    os.path.join(CASCADE_DIR, "haarcascades/haarcascade_eye.xml")
+    os.path.join(CASCADE_DIR, "haarcascade_eye.xml")
 )
 
 smile_cascade = cv2.CascadeClassifier(
-    os.path.join(CASCADE_DIR, "haarcascades/haarcascade_smile.xml")
+    os.path.join(CASCADE_DIR, "haarcascade_smile.xml")
 )
 
 eye_glasses_cascade = cv2.CascadeClassifier(
-    os.path.join(CASCADE_DIR, "haarcascades/haarcascade_eye_tree_eyeglasses.xml")
+    os.path.join(CASCADE_DIR, "haarcascade_eye_tree_eyeglasses.xml")
 )
 
 # ------------------ Check XML Files ------------------
@@ -58,16 +63,32 @@ class VideoProcessor(VideoProcessorBase):
 
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        faces = face_cacade.detectMultiScale(gray, 1.1, 5)
+        faces = face_cacade.detectMultiScale(
+            gray,
+            1.1,
+            5
+        )
 
         for (x, y, w, h) in faces:
 
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            # Draw Face Rectangle
+            cv2.rectangle(
+                frame,
+                (x, y),
+                (x + w, y + h),
+                (0, 255, 0),
+                2
+            )
 
             roi_gray = gray[y:y+h, x:x+w]
 
-            # Eye Detection
-            eyes = eyes_cascade.detectMultiScale(roi_gray, 1.1, 10)
+            # ------------------ Eye Detection ------------------
+
+            eyes = eyes_cascade.detectMultiScale(
+                roi_gray,
+                1.1,
+                10
+            )
 
             if len(eyes) > 0:
                 cv2.putText(
@@ -80,7 +101,8 @@ class VideoProcessor(VideoProcessorBase):
                     2
                 )
 
-            # Eye Glasses Detection
+            # ------------------ Eyeglasses Detection ------------------
+
             eyes_glasses = eye_glasses_cascade.detectMultiScale(
                 roi_gray,
                 1.1,
@@ -94,7 +116,7 @@ class VideoProcessor(VideoProcessorBase):
                     (x, y - 50),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.6,
-                    (255, 255, 0),
+                    (255, 0, 0),
                     2
                 )
             else:
@@ -108,11 +130,13 @@ class VideoProcessor(VideoProcessorBase):
                     2
                 )
 
-            # Smile Detection
+            # ------------------ Smile Detection ------------------
+
             smiles = smile_cascade.detectMultiScale(
                 roi_gray,
-                1.7,
-                20
+                1.3,
+                minNeighbors=35,
+                minSize=(30, 30)
             )
 
             if len(smiles) > 0:
@@ -122,7 +146,7 @@ class VideoProcessor(VideoProcessorBase):
                     (x, y - 10),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.6,
-                    (255, 0, 0),
+                    (0, 255, 0),
                     2
                 )
             else:
@@ -134,13 +158,14 @@ class VideoProcessor(VideoProcessorBase):
                     0.6,
                     (0, 0, 255),
                     2
-
                 )
 
-        return av.VideoFrame.from_ndarray(frame, format="bgr24")
+        return av.VideoFrame.from_ndarray(
+            frame,
+            format="bgr24"
+        )
 
-
-# ------------------ Streamlit WebRTC ------------------
+# ------------------ Start Webcam ------------------
 
 webrtc_streamer(
     key="smart-face-detection",
