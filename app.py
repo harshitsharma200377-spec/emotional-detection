@@ -94,7 +94,7 @@ class VideoProcessor(VideoProcessorBase):
                     (x, y - 50),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.6,
-                    (255, 0, 0),
+                    (255, 255, 0),
                     2
                 )
             else:
@@ -111,9 +111,8 @@ class VideoProcessor(VideoProcessorBase):
             # Smile Detection
             smiles = smile_cascade.detectMultiScale(
                 roi_gray,
-                1.3,
-                minNeighbors=35,
-                minSize=(30,30)
+                1.7,
+                20
             )
 
             if len(smiles) > 0:
@@ -123,7 +122,7 @@ class VideoProcessor(VideoProcessorBase):
                     (x, y - 10),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.6,
-                    (0, 255, 0),
+                    (255, 0, 0),
                     2
                 )
             else:
@@ -135,6 +134,7 @@ class VideoProcessor(VideoProcessorBase):
                     0.6,
                     (0, 0, 255),
                     2
+
                 )
 
         return av.VideoFrame.from_ndarray(frame, format="bgr24")
