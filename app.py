@@ -1,9 +1,5 @@
 import streamlit as st
-from streamlit_webrtc import (
-    webrtc_streamer,
-    VideoProcessorBase,
-    RTCConfiguration
-)
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
 import av
 import cv2
 import os
@@ -117,7 +113,7 @@ class VideoProcessor(VideoProcessorBase):
                 roi_gray,
                 1.3,
                 minNeighbors=35,
-                minSize=(30, 30)
+                minSize=(30,30)
             )
 
             if len(smiles) > 0:
@@ -144,16 +140,6 @@ class VideoProcessor(VideoProcessorBase):
         return av.VideoFrame.from_ndarray(frame, format="bgr24")
 
 
-# ------------------ WebRTC Configuration ------------------
-
-RTC_CONFIGURATION = RTCConfiguration(
-    {
-        "iceServers": [
-            {"urls": ["stun:stun.l.google.com:19302"]}
-        ]
-    }
-)
-
 # ------------------ Streamlit WebRTC ------------------
 
 webrtc_streamer(
@@ -163,5 +149,4 @@ webrtc_streamer(
         "video": True,
         "audio": False
     },
-    rtc_configuration=RTC_CONFIGURATION
 )
