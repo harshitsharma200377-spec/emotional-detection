@@ -111,8 +111,9 @@ class VideoProcessor(VideoProcessorBase):
             # Smile Detection
             smiles = smile_cascade.detectMultiScale(
                 roi_gray,
-                1.9,
-                22
+                1.3,
+                minNeighbors=35,
+                minSize=(30,30)
             )
 
             if len(smiles) > 0:
