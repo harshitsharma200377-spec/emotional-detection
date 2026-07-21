@@ -1,4 +1,5 @@
 # 😊 Smart Face Detection using OpenCV
+## Live demo : https://emotional-detection-q5t8wjuxocntenxroum9y8.streamlit.app/
 
 A real-time face detection application built with **Python** and **OpenCV** using Haar Cascade Classifiers.
 
