@@ -10,7 +10,7 @@ st.title("😊 Smart Face Detection")
 st.write("Real-time Face, Eye and Smile Detection using OpenCV Haar Cascades")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CASCADE_DIR = os.path.join(BASE_DIR, "face and object detection")
+CASCADE_DIR = os.path.join(BASE_DIR, "haarcascade")
 
 face_cacade = cv2.CascadeClassifier(
     os.path.join(CASCADE_DIR, "haarcascades/haarcascade_frontalface_default.xml")
