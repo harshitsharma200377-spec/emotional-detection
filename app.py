@@ -94,7 +94,7 @@ class VideoProcessor(VideoProcessorBase):
                     (x, y - 50),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.6,
-                    (255, 255, 0),
+                    (255, 0, 0),
                     2
                 )
             else:
@@ -122,7 +122,7 @@ class VideoProcessor(VideoProcessorBase):
                     (x, y - 10),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.6,
-                    (255, 0, 0),
+                    (0, 255, 0),
                     2
                 )
             else:
